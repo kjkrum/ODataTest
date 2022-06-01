@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 namespace ODataTest.Controllers
@@ -13,6 +14,7 @@ namespace ODataTest.Controllers
 		}
 
 		[HttpGet]
+		[EnableQuery(AllowedQueryOptions = AllowedQueryOptions.None)]
 		public IActionResult Get()
 		{
 			return Ok(_db.Users);

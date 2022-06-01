@@ -9,7 +9,7 @@ namespace ODataTest
 		public static IEdmModel Build()
 		{
 			var builder = new ODataConventionModelBuilder();
-			builder.EntitySet<User>("Users");
+			builder.EntitySet<User>("Users").HasCountRestrictions().IsCountable(false);
 			return builder.GetEdmModel();
 		}
 	}

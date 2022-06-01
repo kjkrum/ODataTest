@@ -17,6 +17,7 @@ namespace ODataTest
 				.AddOData(options =>
 				{
 					options.AddRouteComponents("odata", EdmBuilder.Build());
+					options.QuerySettings.EnableCount = false;
 				});
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
