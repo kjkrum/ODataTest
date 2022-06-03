@@ -10,7 +10,7 @@ namespace ODataTest
 			var builder = WebApplication.CreateBuilder(args);
 			builder.Services.AddDbContextFactory<TestContext>(options =>
 			{
-				options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
+				options.UseInMemoryDatabase("Test");
 			});
 			builder.Services
 				.AddControllers()
@@ -31,7 +31,13 @@ namespace ODataTest
 			app.UseHttpsRedirection();
 			app.UseAuthorization();
 			app.MapControllers();
-			app.Run();
+			using(var scope = app.Services.CreateScope())
+			{
+				var db = scope.ServiceProvider.GetRequiredService<TestContext>();
+				db.Users.Add(new Models.User() { UserId = 1, Username = "admin" });
+				db.SaveChanges();
+			}
+			app.Run(); 
 		}
 	}
 }
